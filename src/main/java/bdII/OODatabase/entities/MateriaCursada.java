@@ -3,14 +3,15 @@ package bdII.OODatabase.entities;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import java.time.LocalDate;
+import lombok.ToString;
 
 @Setter
 @Getter
+@ToString
 @NoArgsConstructor
 public class MateriaCursada {
 
     private String nombre;
-    private float nota;
-    private LocalDate fecha;
+    private Integer nota;
+    //private LocalDate fecha;
 }
