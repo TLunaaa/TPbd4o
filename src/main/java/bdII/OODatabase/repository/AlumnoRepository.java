@@ -2,13 +2,18 @@ package bdII.OODatabase.repository;
 
 import bdII.OODatabase.entities.Alumno;
 
+import java.util.List;
+import java.util.Optional;
+
 public interface AlumnoRepository {
 
-    Alumno findAlumnoByNameQBE(Alumno alumno);
+    Optional<Alumno> findByNameQBE(Alumno alumno);
 
-    Alumno findAlumnoByNameNQ(String nombre);
+    Optional<Alumno> findByNameNQ(String nombre);
 
-    Alumno findAlumnoByNameSOAP(String nombre);
+    Optional<Alumno> findByNameSODA(String nombre);
+
+    List<Alumno> findAllByPromBiggerThan(Integer nota);
 
     void save(Alumno alumno);
 

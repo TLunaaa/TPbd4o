@@ -36,16 +36,26 @@ public class OoDatabaseApplication {
 		materiaCursada3.setNombre("Analisis Numerico");
 		materiaCursada3.setNota(7);
 
+		MateriaCursada materiaCursada4 = new MateriaCursada();
+		materiaCursada4.setNombre("Fisica III");
+		materiaCursada4.setNota(5);
+
 		Alumno alumno1 = new Alumno();
-		alumno1.setEdad(22);
+		alumno1.setEdad(24);
 		alumno1.setNombre("Tomas Luna");
 		alumno1.addMateria(materiaCursada1);
 		alumno1.addMateria(materiaCursada2);
 
+		Alumno alumno2 = new Alumno();
+		alumno2.setEdad(23);
+		alumno2.setNombre("Nacho Viejo");
+		alumno2.addMateria(materiaCursada4);
+
 		facultad.setAlumnos(List.of(alumno1));
 
 		//Save
-		alumnoService.save(alumno1);
+		alumnoService.create(alumno1);
+		alumnoService.create(alumno2);
 
 		//Query
 		alumnoService.queryAlumno(alumno1);
@@ -56,6 +66,9 @@ public class OoDatabaseApplication {
 
 		//Query again to verify changes
 		alumnoService.queryAlumno(alumno1);
+		alumnoService.queryAlumno(alumno2);
+
+		alumnoService.findAllByPromBiggerThan(6);
 
 		db.close();
 	}

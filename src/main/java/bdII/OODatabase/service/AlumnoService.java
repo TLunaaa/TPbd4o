@@ -5,6 +5,9 @@ import bdII.OODatabase.repository.AlumnoRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Optional;
+
 @Slf4j
 @Service
 public class AlumnoService {
@@ -16,20 +19,30 @@ public class AlumnoService {
     }
 
     public void queryAlumno(Alumno alumno){
-        Alumno alumnoRes = alumnoRepository.findAlumnoByNameQBE(alumno);
-        if(alumnoRes == null){
-            log.info("Alumno not found by QBE, trying by NQ");
-            alumnoRes = alumnoRepository.findAlumnoByNameNQ(alumno.getNombre());
+        Optional<Alumno> alumnoRes = alumnoRepository.findByNameQBE(alumno);
+        if(alumnoRes.isEmpty()){
+            log.info("Alumno not found by QBE, retrying with NQ");
+            alumnoRes = alumnoRepository.findByNameNQ(alumno.getNombre());
         }
-        log.info(String.valueOf(alumnoRes));
+        alumnoRes.ifPresent(value -> log.info(String.valueOf(value)));
     }
 
-    public void save(Alumno alumno){
+    public void create(Alumno alumno){
         alumnoRepository.save(alumno);
+        log.info("Alumno: {} created",alumno.getNombre());
     }
 
     public void update(Alumno alumno){
         alumnoRepository.save(alumno);
+        log.info("Alumno: {} updated",alumno.getNombre());
+    }
+
+    public void findAllByPromBiggerThan(Integer nota){
+        List<Alumno> alumnoList = alumnoRepository.findAllByPromBiggerThan(nota);
+        if(alumnoList != null && !alumnoList.isEmpty()){
+            log.info("Alumnos con promedio mayor que {}:",nota);
+            alumnoList.forEach(alumno -> log.info(alumno.toString()));
+        }
     }
 
 }
