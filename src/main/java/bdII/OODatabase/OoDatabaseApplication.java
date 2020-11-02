@@ -3,15 +3,13 @@ package bdII.OODatabase;
 import bdII.OODatabase.entities.Alumno;
 import bdII.OODatabase.entities.Facultad;
 import bdII.OODatabase.entities.MateriaCursada;
-import bdII.OODatabase.repository.Db4oRepostiory;
+import bdII.OODatabase.service.AlumnoService;
 import com.db4o.ObjectContainer;
-import com.db4o.ObjectSet;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @SpringBootApplication
@@ -20,9 +18,9 @@ public class OoDatabaseApplication {
 
 	public static void main(String[] args) {
 		ApplicationContext ctx = SpringApplication.run(OoDatabaseApplication.class, args);
+		ObjectContainer db = ctx.getBean(ObjectContainer.class);
+		AlumnoService alumnoService = ctx.getBean(AlumnoService.class);
 		Facultad facultad = ctx.getBean(Facultad.class);
-		Db4oRepostiory db4oRepostiory = ctx.getBean(Db4oRepostiory.class);
-		ObjectContainer db = db4oRepostiory.getConnection();
 
 		facultad.setNombre("Facultad de Ingenieria");
 
@@ -42,14 +40,22 @@ public class OoDatabaseApplication {
 		alumno1.setEdad(22);
 		alumno1.setNombre("Tomas Luna");
 		alumno1.addMateria(materiaCursada1);
+		alumno1.addMateria(materiaCursada2);
 
 		facultad.setAlumnos(List.of(alumno1));
-		db.store(alumno1);
-		log.info("Alumno stored");
 
-		log.info("Fetching data:");
-		ObjectSet result = db.queryByExample(alumno1);
-		log.info(String.valueOf(result));
+		//Save
+		alumnoService.save(alumno1);
+
+		//Query
+		alumnoService.queryAlumno(alumno1);
+
+		//Modify and Update
+		alumno1.addMateria(materiaCursada3);
+		alumnoService.update(alumno1);
+
+		//Query again to verify changes
+		alumnoService.queryAlumno(alumno1);
 
 		db.close();
 	}
