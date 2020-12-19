@@ -1,4 +1,4 @@
-package bdII.OODatabase.repository;
+package bdII.OODatabase.repositories;
 
 import com.db4o.Db4oEmbedded;
 import com.db4o.ObjectContainer;

@@ -40,5 +40,8 @@ public class Alumno {
         this.materias.add(materiaCursada);
     }
 
+    public void modifyMateria(MateriaCursada materiaCursada){
+    }
+
 
 }

@@ -1,7 +1,8 @@
-package bdII.OODatabase.service;
+package bdII.OODatabase.services;
 
 import bdII.OODatabase.entities.Alumno;
-import bdII.OODatabase.repository.AlumnoRepository;
+import bdII.OODatabase.entities.MateriaCursada;
+import bdII.OODatabase.repositories.Alumno.AlumnoRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -42,6 +43,26 @@ public class AlumnoService {
         if(alumnoList != null && !alumnoList.isEmpty()){
             log.info("Alumnos con promedio mayor que {}:",nota);
             alumnoList.forEach(alumno -> log.info(alumno.toString()));
+        }
+    }
+
+    public void updateAlumnoMateria(String materia, Alumno alumno, Integer nota){
+        Optional<Alumno> alumnoOptional = alumnoRepository.findByNameQBE(alumno);
+        if(alumnoOptional.isPresent()){
+            Alumno alumno1 = alumnoOptional.get();
+            Optional<MateriaCursada> materiaOptional = alumno.getMaterias().stream()
+                    .filter(materiaCursada1 -> materiaCursada1.getNombre().equals(materia))
+                    .findFirst();
+            if(materiaOptional.isPresent()){
+                MateriaCursada materiaCursada = materiaOptional.get();
+                materiaCursada.setNota(nota);
+                log.info(String.valueOf(materiaCursada));
+                alumnoRepository.save(alumno);
+            }else{
+                log.info("El alumno {} no cursa la materia {}",alumno.getNombre(),materia);
+            }
+        }else{
+            log.info("No se encontro al alumno {}",alumno.getNombre());
         }
     }
 

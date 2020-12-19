@@ -1,6 +1,7 @@
-package bdII.OODatabase.repository;
+package bdII.OODatabase.repositories.Alumno;
 
 import bdII.OODatabase.entities.Alumno;
+import bdII.OODatabase.repositories.Alumno.AlumnoRepository;
 import com.db4o.ObjectContainer;
 import com.db4o.ObjectSet;
 import com.db4o.query.Predicate;
@@ -11,9 +12,9 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.Optional;
 
-@Repository
 @Slf4j
-public class AlumnoRepositoryImpl implements AlumnoRepository{
+@Repository
+public class AlumnoRepositoryImpl implements AlumnoRepository {
 
     private final ObjectContainer db;
 

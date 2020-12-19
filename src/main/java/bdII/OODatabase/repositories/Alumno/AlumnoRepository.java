@@ -1,6 +1,7 @@
-package bdII.OODatabase.repository;
+package bdII.OODatabase.repositories.Alumno;
 
 import bdII.OODatabase.entities.Alumno;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;

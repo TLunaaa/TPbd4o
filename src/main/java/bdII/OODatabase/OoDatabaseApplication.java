@@ -3,7 +3,7 @@ package bdII.OODatabase;
 import bdII.OODatabase.entities.Alumno;
 import bdII.OODatabase.entities.Facultad;
 import bdII.OODatabase.entities.MateriaCursada;
-import bdII.OODatabase.service.AlumnoService;
+import bdII.OODatabase.services.AlumnoService;
 import com.db4o.ObjectContainer;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
@@ -69,6 +69,12 @@ public class OoDatabaseApplication {
 		alumnoService.queryAlumno(alumno2);
 
 		alumnoService.findAllByPromBiggerThan(6);
+
+		//No cursa la materia
+		alumnoService.updateAlumnoMateria(materiaCursada1.getNombre(),alumno2,7);
+
+		alumnoService.updateAlumnoMateria(materiaCursada4.getNombre(),alumno2,7);
+		alumnoService.queryAlumno(alumno2);
 
 		db.close();
 	}
